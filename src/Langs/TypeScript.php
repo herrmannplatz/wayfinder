@@ -158,6 +158,11 @@ class TypeScript
         return self::block("interface {$name} {".PHP_EOL.$content.PHP_EOL.'}');
     }
 
+    public static function enum($name, $content): VariableBuilder
+    {
+        return self::block("enum {$name} {".PHP_EOL.$content.PHP_EOL.'}');
+    }
+
     // public static function exportedObjectToRecord(string $name, array|Collection $values, $quote = true): string
     // {
     //     $record = self::objectToRecord($values, $quote);

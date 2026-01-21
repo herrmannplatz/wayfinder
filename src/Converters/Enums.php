@@ -28,6 +28,42 @@ class Enums extends Converter
                 ->export(),
         );
 
+        $enumLines = [];
+        foreach ($enum->cases as $case => $value) {
+            $enumLines[] = $case." = ".TypeScript::quote($value).",";
+        }
+
+        $content[] = TypeScript::enum(
+            $name,
+            implode(PHP_EOL, $enumLines)
+        )->link($enum->name, $enum->filepath());
+
+        $content[] = '';
+        $content[] = TypeScript::block($name)->exportDefault();
+
+        return new Result($path.'.ts', implode(PHP_EOL, $content));
+    }
+
+    public function convert2(Enum $enum): Result
+    {
+        $name = str($enum->name)->afterLast('\\')->toString();
+        $path = str_replace('\\', '/', $enum->name);
+
+        TypeScript::addFqnToNamespaced(
+            $path,
+            TypeScript::type(
+                $name,
+                TypeScript::union(
+                    collect($enum->cases)
+                        ->map(fn ($case) => "'{$case}'")
+                        ->values()
+                        ->all(),
+                ),
+            )
+                ->referenceClass($enum->name, $enum->filePath())
+                ->export(),
+        );
+
         $content = [];
 
         foreach ($enum->cases as $case => $value) {
