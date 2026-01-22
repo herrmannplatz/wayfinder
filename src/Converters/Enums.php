@@ -8,9 +8,9 @@ use Laravel\Wayfinder\Results\Result;
 
 class Enums extends Converter
 {
-    public function convert(Enum $enum, bool $useUnionType = true): Result
+    public function convert(Enum $enum, bool $useUnionTypes = true): Result
     {
-        return $useUnionType
+        return $useUnionTypes
             ? $this->convertAsUnion($enum)
             : $this->convertAsEnum($enum);
     }

@@ -115,7 +115,8 @@ class GenerateCommand extends Command
         }
 
         if ($this->config->get('wayfinder.generate.enums', true)) {
-            $this->ranger->onEnum(fn ($enum) => $this->results[] = $enumConverter->convert($enum));
+            $enumsAsUnions = $this->config->get('wayfinder.generate.enums_as_unions', true);
+            $this->ranger->onEnum(fn ($enum) => $this->results[] = $enumConverter->convert($enum, $enumsAsUnions));
         }
 
         $routesConverter->generateRoutes($this->config->get('wayfinder.generate.route.named', true));

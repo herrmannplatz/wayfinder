@@ -23,6 +23,7 @@ return [
         ],
         'environment_variables' => env('WAYFINDER_GENERATE_ENVIRONMENT_VARIABLES', true),
         'enums' => env('WAYFINDER_GENERATE_ENUMS', true),
+        'enums_as_unions' => env('WAYFINDER_GENERATE_ENUMS_AS_UNIONS', true), // Not sure where to put it
     ],
 
     // Format the generated files
