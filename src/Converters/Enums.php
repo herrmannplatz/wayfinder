@@ -8,7 +8,14 @@ use Laravel\Wayfinder\Results\Result;
 
 class Enums extends Converter
 {
-    public function convert(Enum $enum): Result
+    public function convert(Enum $enum, bool $useUnionType = true): Result
+    {
+        return $useUnionType
+            ? $this->convertAsUnion($enum)
+            : $this->convertAsEnum($enum);
+    }
+
+    public function convertAsEnum(Enum $enum): Result
     {
         $name = str($enum->name)->afterLast('\\')->toString();
         $path = str_replace('\\', '/', $enum->name);
@@ -44,7 +51,7 @@ class Enums extends Converter
         return new Result($path.'.ts', implode(PHP_EOL, $content));
     }
 
-    public function convert2(Enum $enum): Result
+    public function convertAsUnion(Enum $enum): Result
     {
         $name = str($enum->name)->afterLast('\\')->toString();
         $path = str_replace('\\', '/', $enum->name);
