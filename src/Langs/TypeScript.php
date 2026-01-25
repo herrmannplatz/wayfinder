@@ -160,7 +160,7 @@ class TypeScript
 
     public static function enum($name, $content): VariableBuilder
     {
-        return self::block("enum {$name} {".PHP_EOL.$content.PHP_EOL.'}');
+        return self::block("enum {$name} { ".$content." }");
     }
 
     // public static function exportedObjectToRecord(string $name, array|Collection $values, $quote = true): string

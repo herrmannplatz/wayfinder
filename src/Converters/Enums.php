@@ -22,14 +22,11 @@ class Enums extends Converter
 
         TypeScript::addFqnToNamespaced(
             $path,
-            TypeScript::type(
+            TypeScript::enum(
                 $name,
-                TypeScript::union(
-                    collect($enum->cases)
-                        ->map(fn ($case) => "'{$case}'")
-                        ->values()
-                        ->all(),
-                ),
+                collect($enum->cases)
+                    ->map(fn($value, $case) => $case." = ".TypeScript::quote($value))
+                    ->join(", ")
             )
                 ->referenceClass($enum->name, $enum->filePath())
                 ->export(),
@@ -42,7 +39,9 @@ class Enums extends Converter
 
         $content[] = TypeScript::enum(
             $name,
-            implode(PHP_EOL, $enumLines)
+            collect($enum->cases)
+                ->map(fn($value, $case) => $case." = ".TypeScript::quote($value))
+                ->join(", ")
         )->link($enum->name, $enum->filepath());
 
         $content[] = '';

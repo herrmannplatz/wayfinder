@@ -8,3 +8,10 @@ enum PostStatus: string
     case Published = 'published';
     case Archived = 'archived';
 }
+
+// enum PostStatus
+// {
+//     case Draft;
+//     case Published;
+//     case Archived;
+// }
